@@ -1,0 +1,5 @@
+{
+  "name": "voice-transcribe",
+  "description": "语音消息转文字 + AI 纠错。当收到飞书语音消息时，自动下载音频、使用 faster-whisper 本地模型转录、对转录结果进行 AI 纠错，然后完成正常回复。",
+  "version": "1.0.0"
+}
