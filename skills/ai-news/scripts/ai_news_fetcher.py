@@ -515,39 +515,46 @@ def format_for_push(sections: dict) -> str:
     }
 
     MAX_PER_SOURCE = 4
-    lines = []
+    rows_html = []
 
     for src in source_order:
         if src not in sections:
             continue
         items = sections[src][:MAX_PER_SOURCE]
         name = source_names.get(src, src.upper())
-        lines.append(f"\n{name}\n" + "─" * 16)
 
         seen_titles = set()
+        articles = []
         for item in items:
             title = item["title"].strip()
             if title in seen_titles:
                 continue
             seen_titles.add(title)
             url = item["url"].strip()
-            star = f" ⭐{item['star_count']}" if item["star_count"] else ""
+            star = f" ⭐{int(item['star_count']):,}" if item["star_count"] else ""
 
             # 英文标题翻译为中文
             is_english = all(ord(c) < 128 for c in title)
             if is_english and len(title) > 10:
                 title_cn = translate(title)
-                if title_cn and title_cn != title:
-                    display_title = title_cn
-                else:
-                    display_title = title
+                display_title = title_cn if title_cn and title_cn != title else title
             else:
                 display_title = title
 
             link = make_link(display_title, url)
-            lines.append(f"• {link}{star}")
+            articles.append(f"{link}{star}")
 
-    return "\n".join(lines)
+        rows_html.append(f"<tr><td>{name}</td><td>{'<br>'.join(articles)}</td></tr>")
+
+    table = (
+        "<table>"
+        "<thead><tr><th>媒体</th><th>资讯</th></tr></thead>"
+        "<tbody>"
+        + "".join(rows_html)
+        + "</tbody>"
+        "</table>"
+    )
+    return table
 
 
 def export_csv(hours: int = 24, output_path: str = None) -> str:
