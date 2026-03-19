@@ -39,6 +39,18 @@
 
 ---
 
+## 2026-03-20 早间版（06:05）
+- github: gsd-build/get-shit-done ⭐2,642, 藤原町木/MoneyPrinterV2 ⭐560, 路易斯·E/arnis ⭐918, 移动开发公司/Maestro ⭐469, opendataloader-项目/opendataloader-pdf ⭐1,394
+- 36kr: 工作被AI抢了？答案可能和你想的不一样, 刘强东12年前说透的事正在AI身上重演, 稳扎稳打的腾讯也要为AI花大钱了, AI影视化改编连《新概念英语》都没放过, Token额度算入年薪AI时代求职门槛正在改写
+- huxiu: 对异性失去欲望的年轻人买爆情趣用品, 股价暴跌24%腾讯音乐的壁垒被AI搞崩了, 为什么医院门口总有烤红薯摊, 我们是如何被清醒人设霸凌的, 一条3公里的搓衣板路震出了一个村的良心
+- tmtpost: 算力告急Token暴涨Agent时代阿里云如何估值, 五年亏116亿永辉喊话山姆别让供应商站队, 贝壳的钱不好赚了
+- techcrunch: Geothermal startup Fervo valley of death, Polymarket MLB合作, 加州餐厅跳舞机器人发疯, Cloudflare在线机器人流量2027超人类, Bluesky 100M Series B
+- theverge: Xbox controller史低, 流氓AI导致Meta严重安全事件, Hermès 5150美元充电保护套无电源适配器, 游戏控制器降价50美元, Sony WF-1000XM6促销
+
+**推送结果**: ✅ 成功，推送至刘峰（open_id: ou_620abe530f4e51e0f6c22fe8f3472055），messageId: om_x100b54f37d48b888c29fe43685872b0
+
+---
+
 ## 2026-03-20 凌晨版（00:04）
 - github: gsd-build/get-shit-done ⭐2,642, opendataloader-project/opendataloader-pdf ⭐1,394, louis-e/arnis ⭐918, FujiwaraChoki/MoneyPrinterV2 ⭐560, mobile-dev-inc/Maestro ⭐469
 - 36kr: 工作被AI抢了？答案可能和你想的不一样, 刘强东12年前说透的事正在AI身上重演, 稳扎稳打的腾讯也要为AI花大钱了, AI影视化改编连《新概念英语》都没放过, Token额度算入年薪AI时代求职门槛正在改写
