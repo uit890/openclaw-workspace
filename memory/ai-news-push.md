@@ -39,6 +39,15 @@
 
 ---
 
+## 2026-03-20 凌晨版（00:04）
+- github: gsd-build/get-shit-done ⭐2,642, opendataloader-project/opendataloader-pdf ⭐1,394, louis-e/arnis ⭐918, FujiwaraChoki/MoneyPrinterV2 ⭐560, mobile-dev-inc/Maestro ⭐469
+- 36kr: 工作被AI抢了？答案可能和你想的不一样, 刘强东12年前说透的事正在AI身上重演, 稳扎稳打的腾讯也要为AI花大钱了, AI影视化改编连《新概念英语》都没放过, Token额度算入年薪AI时代求职门槛正在改写
+- theverge: 无论如何主要系列, 怪奇物语结束了, Epic和迪士尼允许堡垒之夜创作者制作星球大战游戏, 莉娜·汗是对的, 小气鬼付费流媒体
+
+**推送结果**: ✅ 成功，推送至刘峰（open_id: ou_620abe530f4e51e0f6c22fe8f3472055），messageId: om_x100b54f5a757d4b8c2b238680ee1d77
+
+---
+
 ## 推送说明
 - 数据存储于: /Users/liufeng/work/dev/chuyunxiyi-ai/ai_news.db
 - 抓取脚本: ~/.openclaw/workspace/skills/ai-news/scripts/ai_news_fetcher.py
