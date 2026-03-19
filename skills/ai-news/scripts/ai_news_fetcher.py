@@ -75,13 +75,14 @@ def is_duplicate(source: str, title: str) -> bool:
 def insert_news(source: str, title: str, url: str, summary=None,
                 published_at=None, star_count=None) -> bool:
     h = title_hash(title)
+    now_utc = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
     with get_conn() as conn:
         try:
             c = conn.cursor()
             c.execute("""
-                INSERT INTO ai_news (source, title, url, summary, published_at, star_count, title_hash)
-                VALUES (?, ?, ?, ?, ?, ?, ?)
-            """, (source, title, url, summary, published_at, star_count, h))
+                INSERT INTO ai_news (source, title, url, summary, published_at, star_count, title_hash, fetched_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            """, (source, title, url, summary, published_at, star_count, h, now_utc))
             conn.commit()
             return True
         except sqlite3.IntegrityError:
@@ -545,6 +546,38 @@ def format_for_push(sections: dict) -> str:
             lines.append(f"• {link}{star}")
 
     return "\n".join(lines)
+
+
+def export_csv(hours: int = 24, output_path: str = None) -> str:
+    """导出最近 N 小时的资讯为 CSV 文件，返回文件路径"""
+    import csv
+    from pathlib import Path
+
+    cutoff = datetime.now() - timedelta(hours=hours)
+    if output_path is None:
+        output_path = DB_PATH.parent / f"ai_news_export_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
+    else:
+        output_path = Path(output_path)
+
+    with get_conn() as conn:
+        conn.row_factory = sqlite3.Row
+        c = conn.cursor()
+        c.execute("""
+            SELECT source, title, url, summary, star_count, published_at, fetched_at
+            FROM ai_news
+            WHERE fetched_at >= ?
+            ORDER BY fetched_at DESC
+        """, (cutoff,))
+        rows = c.fetchall()
+
+    with open(output_path, "w", newline="", encoding="utf-8-sig") as f:
+        writer = csv.DictWriter(f, fieldnames=["source", "title", "url", "summary", "star_count", "published_at", "fetched_at"])
+        writer.writeheader()
+        for row in rows:
+            writer.writerow(dict(row))
+
+    log.info("📄 导出 CSV: %s (%s 条)", output_path, len(rows))
+    return str(output_path)
 
 
 if __name__ == "__main__":

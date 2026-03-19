@@ -55,6 +55,18 @@ content = format_for_push(sections)
 | published_at | 发布时间 |
 | fetched_at | 入库时间 |
 
+### 导出 CSV
+
+```python
+import sys
+sys.path.insert(0, os.path.expanduser("~/.openclaw/workspace/skills/ai-news/scripts"))
+from ai_news_fetcher import export_csv
+
+path = export_csv(hours=24)  # 默认导出到 ~/work/dev/chuyunxiyi-ai/
+# 自定义路径
+path = export_csv(hours=24, output_path="/自定义/路径/news.csv")
+```
+
 ## 执行流程
 
 1. 并行请求 6 个数据源（各自独立 try-catch）
