@@ -544,7 +544,7 @@ def format_for_push(sections: dict) -> str:
             link = make_link(display_title, url)
             articles.append(f"{link}{star}")
 
-        rows_html.append(f"<tr><td>{name}</td><td>{'<br>'.join(articles)}</td></tr>")
+        rows_html.append(f"<tr><td>{name}</td><td>{' · '.join(articles)}</td></tr>")
 
     table = (
         "<table>"

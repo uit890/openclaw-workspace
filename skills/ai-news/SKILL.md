@@ -67,6 +67,15 @@ path = export_csv(hours=24)  # 默认导出到 ~/work/dev/chuyunxiyi-ai/
 path = export_csv(hours=24, output_path="/自定义/路径/news.csv")
 ```
 
+### 推送格式（format_for_push）
+
+返回 Feishu 兼容的 Markdown 二维表格：
+- 第一列：媒体来源（含 emoji）
+- 第二列：资讯标题（超链接），多条用 `·` 分隔
+- 每来源最多 4 条
+- 英文标题自动翻译为中文
+- GitHub 优先展示在最前
+
 ## 执行流程
 
 1. 并行请求 6 个数据源（各自独立 try-catch）
