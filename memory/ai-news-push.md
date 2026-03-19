@@ -18,6 +18,18 @@
 
 ---
 
+## 2026-03-19 晚间版（22:04）
+- github: gsd-build/get-shit-done ⭐2,642, jarrodwatts/claude-hud ⭐1,394, louis-e/arnis ⭐918, FujiwaraChoki/MoneyPrinterV2 ⭐560
+- 36kr: 工作被AI抢了？答案可能和你想的不一样, Token额度算入年薪，AI时代求职门槛正在改写, 全球算力告急涨价潮, 稳扎稳打的腾讯也要为AI花大钱了
+- huxiu: 日赚6亿的腾讯把员工薪酬拉到人均113万, 腾讯2025年报亮点与隐忧, 机器人正在抛弃语言GTC2026答案, 我们是如何被清醒人设霸凌的
+- tmtpost: 算力告急Token暴涨Agent时代阿里云如何估值, 贝壳的钱不好赚了, 在GTC谈基座模型元戎启行, 五年亏116亿永辉喊话山姆
+- techcrunch: Feds intensify Tesla FSD investigation, Cloaked raises $375M, Arc electric boats $50M, Alphabet X spinout Anori
+- theverge: Fitbit AI health coach reads medical records, Paramount Warner Bros merger, Nothing Phone 4A Pro review
+
+**推送结果**: ✅ 成功，推送至刘峰（open_id: ou_620abe530f4e51e0f6c22fe8f3472055），messageId: om_x100b54f4646d90a0c3a7997c4d95007
+
+---
+
 ## 推送说明
 - 数据存储于: /Users/liufeng/work/dev/chuyunxiyi-ai/ai_news.db
 - 抓取脚本: ~/.openclaw/workspace/skills/ai-news/scripts/ai_news_fetcher.py
