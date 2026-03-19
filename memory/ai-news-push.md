@@ -1,12 +1,30 @@
 # AI资讯推送记录
 用于去重，跟踪已推送的内容
 
-## 2026-03-19 10:03 (本次)
+## 2026-03-19 10:03
 - AI大厂疯抢，文科生时代红利来了？
 - 成为全球AI工厂，中国的又一张国运王牌
 - AI大爆炸加剧普通人焦虑，凯文·凯利回应时代情绪
 - AI Coding实战：10年祖传系统，54万行代码，2周重构结束
 - FBI confirms buying location data to track US citizens
+
+## 2026-03-19 12:03 (本次)
+- 回国一周，对之前在朋友圈里看到的国人AI焦虑有了实感
+- 影视圈99%的人去哪儿？
+- OpenClaw之后，AI AGENT赛道研讨
+- 【钛晨报】证监会最新部署；阿里云百度智能云涨价京东云不涨；奇瑞战略入局可控核聚变
+- 微信AI大招：马化腾小程序都可能"龙虾化"
+- 营收增18.9%调整后净利润转正，ALL in AI的微盟终于等到业绩拐点
+- iOS 26.4修复高速打字字符丢失
+- Perplexity发布iOS版Comet浏览器
+- Tomb Raider开发商Crystal Dynamics再次裁员
+- Double Fine新派对游戏Kiln 4月23日发布
+- Hollow Knight: Silksong大型资料片Sea of Sorrow今年内推出
+- obra/superpowers ⭐96.7k
+- unslothai/unsloth ⭐56k
+- jarrodwatts/claude-hud ⭐7.4k
+- shadps4-emu/shadPS4 ⭐30k
+- langchain-ai/open-swe ⭐6.5k
 
 ## 2026-03-19 08:03 (本次)
 - 实测MiniMax M2.7：上能拆英伟达，下能演我爸妈
