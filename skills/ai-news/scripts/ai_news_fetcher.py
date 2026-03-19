@@ -170,15 +170,17 @@ def fetch_github():
             link = "https://github.com" + title_tag.get("href", "")
             desc_tag = item.select_one("p.col-9")
             summary = desc_tag.get_text(strip=True) if desc_tag else None
-            # 星标信息在 div.f6 中
+            # 星标信息：从 span.d-inline-block.float-sm-right 取 "X stars today"
             meta_tag = item.select_one("div.f6")
             star_count = None
             if meta_tag:
-                text = meta_tag.get_text(strip=True)
-                # 格式: "Python 56,195  7,773  Built by..."
-                parts = text.split()
-                if parts:
-                    star_count = parts[0]
+                spans = meta_tag.select("span.d-inline-block.float-sm-right")
+                if spans:
+                    text = spans[-1].get_text(strip=True)
+                    # 格式: "1,038 stars today"
+                    m = re.match(r"([\d,]+)\s+stars today", text)
+                    if m:
+                        star_count = m.group(1).replace(",", "")
             published = datetime.now()  # GitHub trending 不显示时间，用抓取时间
             results.append({
                 "source": "github",
