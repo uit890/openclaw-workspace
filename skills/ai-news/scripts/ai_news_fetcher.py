@@ -535,7 +535,7 @@ def format_for_feishu_card(sections: dict) -> dict:
 
             # 转义 title 中的 ] 避免破坏飞书链接格式
             safe_title = display_title.replace("]", "』")
-            star = f" ⭐{int(item['star_count']):,}" if item.get("star_count") else ""
+            star = f" ⭐{int(item['star_count']):,}" if item["star_count"] else ""
 
             # 飞书卡片 cell 格式：
             # - 合并行：起点 cell 有 rowspan 字段，其余被合并的 cell rowspan=0 colspan=0

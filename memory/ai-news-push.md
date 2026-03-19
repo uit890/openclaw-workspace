@@ -1,5 +1,14 @@
 # AI 资讯推送记录
 
+## 2026-03-19 晚间版（23:17）
+- github: gsd-build/get-shit-done ⭐2,642, opendataloader-project/opendataloader-pdf ⭐1,394, louis-e/arnis ⭐918, FujiwaraChoki/MoneyPrinterV2 ⭐560, mobile-dev-inc/Maestro ⭐469
+- 36kr: 工作被AI抢了？答案可能和你想的不一样, 刘强东12年前说透的事正在AI身上重演, 稳扎稳打的腾讯也要为AI花大钱了, AI影视化改编连《新概念英语》都没放过, Token额度算入年薪AI时代求职门槛正在改写
+- theverge: Waymo行驶了1.7亿英里同时避免了严重混乱, Belkin无线HDMI适配器, Lina Khan对Meta的看法, AfroMan诽谤案, 五角大楼皮特·赫格斯骂战地记者
+
+**推送结果**: ✅ 成功，格式：飞书 Card Table（来源纵向合并单元格 + 摘要可点击链接），共15条
+
+---
+
 ## 2026-03-19 晚间版（20:03）
 - github: gsd-build/get-shit-done ⭐2,642, 路易斯·E/arnis ⭐918, 藤原町木/MoneyPrinterV2 ⭐560, 移动开发公司/Maestro ⭐469
 - 36kr: 中国AI资产将全面爆发, All in AI后手机正在被反噬, 老黄怒怼玩家根本不懂AI英伟达遭抵制, 我在OpenClaw里发现了一个新商业闭环
