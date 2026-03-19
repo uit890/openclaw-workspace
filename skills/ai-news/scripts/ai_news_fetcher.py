@@ -444,8 +444,8 @@ def run():
     return new_count, dup_count
 
 
-def get_recent_news(hours: int = 24, limit: int = 20):
-    """获取最近 N 小时的资讯，按来源分组，格式化用于推送"""
+def get_recent_news(hours: int = 24, limit: int = 100):
+    """获取最近 N 小时的资讯，按来源分组。优先按发布时间降序，保证各来源都有数据。"""
     cutoff = datetime.now() - timedelta(hours=hours)
     with get_conn() as conn:
         conn.row_factory = sqlite3.Row
@@ -454,7 +454,7 @@ def get_recent_news(hours: int = 24, limit: int = 20):
             SELECT source, title, url, summary, star_count, published_at, fetched_at
             FROM ai_news
             WHERE fetched_at >= ?
-            ORDER BY fetched_at DESC
+            ORDER BY published_at DESC NULLS LAST, fetched_at DESC
             LIMIT ?
         """, (cutoff, limit))
         rows = c.fetchall()
@@ -555,7 +555,7 @@ def export_csv(hours: int = 24, output_path: str = None) -> str:
 
     cutoff = datetime.now() - timedelta(hours=hours)
     if output_path is None:
-        output_path = DB_PATH.parent / f"ai_news_export_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
+        output_path = Path("/tmp/openclaw/ai_news_export.csv")
     else:
         output_path = Path(output_path)
 
