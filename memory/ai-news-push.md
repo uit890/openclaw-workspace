@@ -8,6 +8,15 @@
 - AI Coding实战：10年祖传系统，54万行代码，2周重构结束
 - FBI confirms buying location data to track US citizens
 
+## 2026-03-19 16:03 (本次)
+- newton-physics/newton - 开源GPU加速物理模拟引擎 (NVIDIA Warp) ⭐3k
+- langchain-ai/open-swe - 开源异步编程Agent ⭐6.6k
+- 「日本最强AI」光速塌房，都怪中国DeepSeek太强？
+- 黄仁勋即中本聪
+- 从"聪明的废物"到"数字员工"，智能体落地如何破局
+- iOS 26.4修复高速打字丢字符bug
+- Perplexity发布iOS版Comet浏览器
+
 ## 2026-03-19 14:03 (本次)
 - jarrodwatts/claude-hud ⭐7.5k
 - obra/superpowers ⭐96.9k
