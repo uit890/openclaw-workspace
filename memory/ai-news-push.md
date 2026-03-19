@@ -8,6 +8,16 @@
 - AI Coding实战：10年祖传系统，54万行代码，2周重构结束
 - FBI confirms buying location data to track US citizens
 
+## 2026-03-19 14:03 (本次)
+- jarrodwatts/claude-hud ⭐7.5k
+- obra/superpowers ⭐96.9k
+- unslothai/unsloth ⭐56k
+- shadps4-emu/shadPS4
+- langchain-ai/open-swe ⭐6.5k
+- 黄仁勋即中本聪
+- Frore Systems融资1.43亿美元估值16.4亿美元成AI散热独角兽
+- 影视圈99%的人去哪儿？
+
 ## 2026-03-19 12:03 (本次)
 - 回国一周，对之前在朋友圈里看到的国人AI焦虑有了实感
 - 影视圈99%的人去哪儿？
