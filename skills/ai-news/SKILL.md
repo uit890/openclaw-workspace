@@ -102,6 +102,6 @@ path = export_csv(hours=24)  # 输出到 /tmp/openclaw/ai_news_export.csv
 
 使用 CronCreate 工具设置定时任务：
 
-- cron 表达式：`0 6,8,10,12,14,16,18,20,22 * * *`（每2小时一次）
+- cron 表达式：`0 0/2 * * *`（每2小时一次）
 - sessionTarget: isolated
 - prompt：执行 ai-news-fetcher skill 完整流程（抓取→格式化→发送）
