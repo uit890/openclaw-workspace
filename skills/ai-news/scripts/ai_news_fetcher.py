@@ -471,12 +471,11 @@ def get_recent_news(hours: int = 24, limit: int = 100):
     return sections
 
 
-def format_for_feishu_card(sections: dict) -> dict:
+def format_for_feishu_markdown(sections: dict) -> str:
     """
-    将分区数据格式化为飞书 Card Table JSON
-    - 第一列：来源媒体（纵向合并单元格 rowspan）
-    - 第二列：摘要（可点击超链接）
-    - 每来源最多 5 条
+    将分区数据格式化为飞书 Markdown 格式文本
+    - 每来源一个小标题
+    - 每条资讯为带超链接的列表项
     - 英文标题翻译为中文
     """
     from deep_translator import GoogleTranslator
@@ -507,18 +506,16 @@ def format_for_feishu_card(sections: dict) -> dict:
     }
 
     MAX_PER_SOURCE = 5
+    lines = ["## 🤖 AI 科技资讯\n"]
 
-    # 构建 table rows
-    # Feishu Card table: 每个 cell 是一个 {tag: "cell", ...} 对象
-    # 合并单元格：起点 cell 设 rowspan，非起点设 rowspan=0, colspan=0
-    rows = []
     for src in source_order:
         if src not in sections:
             continue
         items = sections[src][:MAX_PER_SOURCE]
 
         seen_titles = set()
-        for i, item in enumerate(items):
+        count = 0
+        for item in items:
             title = item["title"].strip()
             if title in seen_titles:
                 continue
@@ -537,74 +534,28 @@ def format_for_feishu_card(sections: dict) -> dict:
             safe_title = display_title.replace("]", "』")
             star = f" ⭐{int(item['star_count']):,}" if item["star_count"] else ""
 
-            # 飞书卡片 cell 格式：
-            # - 合并行：起点 cell 有 rowspan 字段，其余被合并的 cell rowspan=0 colspan=0
-            is_first_in_group = (i == 0)
-            group_size = len(items) if is_first_in_group else 0
+            # 第一条时输出来源小标题
+            if count == 0:
+                lines.append(f"### {source_names.get(src, src)}\n")
 
-            # 第一列 cell（来源媒体）
-            if is_first_in_group:
-                src_cell = {
-                    "tag": "cell",
-                    "text": source_names.get(src, src),
-                    "rowspan": group_size,
-                    "colspan": 1,
-                }
-            else:
-                src_cell = {
-                    "tag": "cell",
-                    "text": "",
-                    "rowspan": 0,
-                    "colspan": 0,
-                }
+            lines.append(f"- [{safe_title}]({url}){star}")
+            count += 1
 
-            # 第二列 cell（摘要链接）
-            summary_cell = {
-                "tag": "cell",
-                "text": f'[{safe_title}]({url}){star}',
-                "markdown": True,
-                "rowspan": 1 if not is_first_in_group else group_size,
-                "colspan": 1,
-            }
+    lines.append(f"\n---\n*由 AI News Fetcher 自动抓取 · {datetime.now().strftime('%Y-%m-%d %H:%M')}*")
+    return "\n".join(lines)
 
-            rows.append([src_cell, summary_cell])
 
-    card = {
-        "msg_type": "interactive",
-        "card": {
-            "header": {
-                "title": {"tag": "plain_text", "content": "🤖 AI 科技资讯"},
-                "template": "blue",
-            },
-            "elements": [
-                {
-                    "tag": "table",
-                    "columns": [
-                        {"title": {"tag": "plain_text", "content": "来源媒体"}, "width": 120},
-                        {"title": {"tag": "plain_text", "content": "摘要"}, "width": 520},
-                    ],
-                    "rows": rows,
-                },
-                {"tag": "hr"},
-                {
-                    "tag": "note",
-                    "elements": [
-                        {"tag": "plain_text", "content": "由 AI News Fetcher 自动抓取 · "},
-                        {"tag": "plain_text", "content": datetime.now().strftime("%Y-%m-%d %H:%M")},
-                    ],
-                },
-            ],
-        },
-    }
-    return card
+def format_for_feishu_card(sections: dict) -> dict:
+    """
+    将分区数据格式化为飞书 Card Table JSON（已废弃，请使用 format_for_feishu_markdown）
+    """
+    return {"msg_type": "text", "content": format_for_feishu_markdown(sections)}
 
 
 # 兼容旧接口
 def format_for_push(sections: dict) -> str:
-    """兼容旧调用，透传到 format_for_feishu_card，取 card.elements[0].rows 渲染为文本"""
-    card = format_for_feishu_card(sections)
-    # 提取出链接文本用于旧场景（飞书卡片模式直接发 card JSON）
-    return str(card)
+    """对外暴露的统一入口，直接返回格式化的飞书 Markdown"""
+    return format_for_feishu_markdown(sections)
 
 
 if __name__ == "__main__":
