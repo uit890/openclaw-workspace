@@ -469,29 +469,80 @@ def get_recent_news(hours: int = 24, limit: int = 20):
 
 
 def format_for_push(sections: dict) -> str:
-    """将分区数据格式化为推送文本"""
-    lines = []
+    """
+    将分区数据格式化为推送文本
+    - GitHub 优先展示
+    - 每来源最多 4 条
+    - 英文翻译为中文
+    - 标题作为超链接展示
+    """
+    from deep_translator import GoogleTranslator
+    import urllib.parse
+
+    _translator = GoogleTranslator(source="en", target="zh-CN")
+    _trans_cache = {}
+
+    def translate(text: str) -> str:
+        """翻译英文到中文，带缓存"""
+        if not text:
+            return text
+        if text in _trans_cache:
+            return _trans_cache[text]
+        try:
+            result = _translator.translate(text)
+            _trans_cache[text] = result
+            return result
+        except Exception:
+            return text  # 翻译失败返回原文
+
+    def make_link(title: str, url: str) -> str:
+        """生成 Feishu 兼容的 markdown 链接"""
+        # 转义 title 中的 ] 避免破坏链接格式
+        safe_title = title.replace("]", "』")
+        return f"[{safe_title}]({url})"
+
+    source_order = ["github", "36kr", "huxiu", "tmtpost", "techcrunch", "theverge"]
     source_names = {
-        "36kr":      "📱 36氪",
-        "github":    "⭐ GitHub",
-        "huxiu":     "🐯 虎嗅",
+        "github":    "⭐ GitHub 热点",
+        "36kr":     "📱 36氪",
+        "huxiu":    "🐯 虎嗅",
         "tmtpost":   "🔬 钛媒体",
         "techcrunch":"🌐 TechCrunch",
         "theverge":  "🌍 The Verge",
     }
 
-    for src, items in sections.items():
+    MAX_PER_SOURCE = 4
+    lines = []
+
+    for src in source_order:
+        if src not in sections:
+            continue
+        items = sections[src][:MAX_PER_SOURCE]
         name = source_names.get(src, src.upper())
-        lines.append(f"\n{name}\n" + "─" * 20)
+        lines.append(f"\n{name}\n" + "─" * 16)
+
         seen_titles = set()
         for item in items:
-            title = item["title"]
+            title = item["title"].strip()
             if title in seen_titles:
                 continue
             seen_titles.add(title)
-            url = item["url"]
+            url = item["url"].strip()
             star = f" ⭐{item['star_count']}" if item["star_count"] else ""
-            lines.append(f"• {title}{star}\n  {url}")
+
+            # 英文标题翻译为中文
+            is_english = all(ord(c) < 128 for c in title)
+            if is_english and len(title) > 10:
+                title_cn = translate(title)
+                if title_cn and title_cn != title:
+                    display_title = title_cn
+                else:
+                    display_title = title
+            else:
+                display_title = title
+
+            link = make_link(display_title, url)
+            lines.append(f"• {link}{star}")
 
     return "\n".join(lines)
 
