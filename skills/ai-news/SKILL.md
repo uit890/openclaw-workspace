@@ -45,9 +45,7 @@ markdown_text = format_for_push(sections)
 
 ### Step 3 — 发送给用户
 
-**必须使用 Feishu Interactive Card 格式发送**（原生可点击超链接）。
-
-由于 cron isolated agent 可能不会自动调用 Python 函数，请严格按以下步骤执行：
+`format_for_push()` 返回飞书兼容 Markdown 文本（`text` 格式），每条资讯标题格式为 `[标题](URL)`，URL 不在明文中展示。
 
 **Step A — 执行 Python 脚本获取推送内容**
 
@@ -61,25 +59,23 @@ from ai_news_fetcher import run, get_recent_news, format_for_push
 
 run()                          # 抓取并存库（自动去重）
 sections = get_recent_news(hours=24, limit=50)
-result = format_for_push(sections)  # 返回 dict: {"msg_type": "interactive", "card": {...}}
-print(result)                  # 打出结构供下一步使用
+text = format_for_push(sections)  # 返回 Markdown 文本
+print(text)
 PYEOF
 ```
 
 **Step B — 用 message 工具发送**
 
-从 Step A 的输出中提取 `result`（一个 Python dict），通过 message 工具发送：
-
 ```
 target: user:ou_620abe530f4e51e0f6c22fe8f3472055
-message: <Step A 打印出的 dict（整个 JSON 对象）>
+msg_type: text
+message: <format_for_push() 返回的文本>
 ```
 
 **⚠️ 关键要求**：
-- `message` 参数必须传入 `format_for_push()` 返回的 **dict 对象本身**（JSON 格式），不是字符串
-- 消息类型由 dict 内的 `msg_type: "interactive"` 字段决定
-- **禁止**自己写文字描述内容，禁止用 text 格式发送 markdown 链接
-- 每条资讯的标题是可点击超链接，URL 不在明文中展示
+- `msg_type` 设为 `text`
+- `message` 直接传 Markdown 文本，`[标题](URL)` 格式在飞书客户端中可点击
+- **禁止**自己写文字描述内容，禁止用其他格式发送
 
 ## 输出格式
 

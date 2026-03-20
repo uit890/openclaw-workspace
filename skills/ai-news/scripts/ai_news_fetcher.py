@@ -618,13 +618,17 @@ def format_for_feishu_card(sections: dict) -> dict:
 
 
 # 兼容旧接口
-def format_for_push(sections: dict) -> dict:
+def format_for_push(sections: dict) -> str:
     """
     对外暴露的统一入口。
-    返回飞书卡片消息（Interactive Card），标题为原生可点击超链接，URL 不在明文中。
-    返回 dict：{"msg_type": "interactive", "card": <card json>}
+    返回飞书兼容 Markdown 文本，每条资讯标题格式为 [标题](URL)，
+    URL 不出现在明文中。
+    
+    注意：当前 OpenClaw 版本飞书 channel 对 interactive card 渲染有问题，
+    故使用 text 格式 + Markdown 链接，在支持 Markdown 的客户端（如飞书）
+    中标题可点击。
     """
-    return format_for_feishu_card(sections)
+    return format_for_feishu_markdown(sections)
 
 
 if __name__ == "__main__":
