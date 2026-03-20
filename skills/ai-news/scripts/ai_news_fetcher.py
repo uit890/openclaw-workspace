@@ -473,9 +473,9 @@ def get_recent_news(hours: int = 24, limit: int = 100):
 
 def format_for_feishu_markdown(sections: dict) -> str:
     """
-    将分区数据格式化为飞书 Markdown 格式文本
+    将分区数据格式化为飞书 Markdown 格式文本（标题为可点击超链接）
     - 每来源一个小标题
-    - 每条资讯为带超链接的列表项
+    - 每条资讯为 [标题](URL) 格式，标题可点击
     - 英文标题翻译为中文
     """
     from deep_translator import GoogleTranslator
@@ -538,6 +538,7 @@ def format_for_feishu_markdown(sections: dict) -> str:
             if count == 0:
                 lines.append(f"### {source_names.get(src, src)}\n")
 
+            # 标题本身是可点击超链接，URL 不出现在明文中
             lines.append(f"- [{safe_title}]({url}){star}")
             count += 1
 
@@ -547,15 +548,83 @@ def format_for_feishu_markdown(sections: dict) -> str:
 
 def format_for_feishu_card(sections: dict) -> dict:
     """
-    将分区数据格式化为飞书 Card Table JSON（已废弃，请使用 format_for_feishu_markdown）
+    将分区数据格式化为飞书 Interactive Card（原生可点击超链接卡片）。
+    每条资讯的标题是原生 <a href="URL"> 标签，URL 不在明文中展示。
+    返回 dict：{"msg_type": "interactive", "card": <card json>}
     """
-    return {"msg_type": "text", "content": format_for_feishu_markdown(sections)}
+    source_order = ["github", "36kr", "huxiu", "tmtpost", "techcrunch", "theverge"]
+    source_names = {
+        "github":     "⭐ GitHub",
+        "36kr":      "📱 36氪",
+        "huxiu":     "🐯 虎嗅",
+        "tmtpost":   "🔬 钛媒体",
+        "techcrunch":"🌐 TechCrunch",
+        "theverge":  "🌍 The Verge",
+    }
+    MAX_PER_SOURCE = 5
+
+    # 构建 card elements
+    elements = []
+
+    # 头部标题
+    elements.append({
+        "tag": "markdown",
+        "content": "## 🤖 AI 科技资讯"
+    })
+
+    for src in source_order:
+        if src not in sections:
+            continue
+        items = sections[src][:MAX_PER_SOURCE]
+
+        seen_titles = set()
+        count = 0
+        for item in items:
+            title = item["title"].strip()
+            if title in seen_titles:
+                continue
+            seen_titles.add(title)
+            url = item["url"].strip()
+
+            # 转义 title 中的 | 避免破坏飞书 markdown 表格/列表
+            safe_title = title.replace("]", "』").replace("[", "【")
+            star = f" ⭐{int(item['star_count']):,}" if item["star_count"] else ""
+
+            # 每来源第一条输出小标题
+            if count == 0:
+                elements.append({
+                    "tag": "markdown",
+                    "content": f"**{source_names.get(src, src)}**"
+                })
+
+            # 标题为原生可点击超链接，URL 不在明文中
+            elements.append({
+                "tag": "markdown",
+                "content": f"- [{safe_title}]({url}){star}"
+            })
+            count += 1
+
+    # 底部时间戳
+    elements.append({
+        "tag": "markdown",
+        "content": f"\n---\n*由 AI News Fetcher 自动抓取 · {datetime.now().strftime('%Y-%m-%d %H:%M')}*"
+    })
+
+    card = {
+        "config": {"wide_screen_mode": True},
+        "elements": elements
+    }
+    return {"msg_type": "interactive", "card": card}
 
 
 # 兼容旧接口
-def format_for_push(sections: dict) -> str:
-    """对外暴露的统一入口，直接返回格式化的飞书 Markdown"""
-    return format_for_feishu_markdown(sections)
+def format_for_push(sections: dict) -> dict:
+    """
+    对外暴露的统一入口。
+    返回飞书卡片消息（Interactive Card），标题为原生可点击超链接，URL 不在明文中。
+    返回 dict：{"msg_type": "interactive", "card": <card json>}
+    """
+    return format_for_feishu_card(sections)
 
 
 if __name__ == "__main__":

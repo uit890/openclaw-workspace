@@ -45,38 +45,40 @@ markdown_text = format_for_push(sections)
 
 ### Step 3 — 发送给用户
 
-通过 OpenClaw message 工具发送（channel=feishu，msg_type=text）：
+`format_for_push()` 返回的是卡片结构（dict），通过 OpenClaw message 工具发送：
 
 ```
 target: ou_620abe530f4e51e0f6c22fe8f3472055
-message: <markdown_text 内容>
-msg_type: text
+message: <format_for_push() 返回的 dict>
+msg_type: interactive（由 message 内容中的 msg_type 决定）
 ```
+
+**注意**：发送时 `message` 参数直接传 `format_for_push()` 返回的 dict（Python object），消息类型为 `interactive`，卡片内的链接是原生可点击的，**URL 不会在明文中显示**。
 
 ## 输出格式
 
-`format_for_push()` 返回飞书兼容 Markdown，超链接格式为 `[标题](URL)`：
+`format_for_push()` 返回飞书 **Interactive Card**（原生可点击超链接卡片）：
 
-```markdown
-## 🤖 AI 科技资讯
-
-### ⭐ GitHub
-- [repo-name](https://github.com/...) ⭐1,234
-- [repo-name](https://github.com/...) ⭐567
-
-### 📱 36氪
-- [文章标题](https://www.36kr.com/p/...) 
-- [文章标题](https://www.36kr.com/p/...)
-
----
-*由 AI News Fetcher 自动抓取 · 2026-03-19 22:00*
+```json
+{
+  "msg_type": "interactive",
+  "card": {
+    "config": {"wide_screen_mode": true},
+    "elements": [
+      {"tag": "markdown", "content": "## 🤖 AI 科技资讯"},
+      {"tag": "markdown", "content": "**⭐ GitHub**"},
+      {"tag": "markdown", "content": "- [repo-name](https://github.com/...) ⭐1,234"},
+      ...
+    ]
+  }
+}
 ```
 
 **规格：**
 - GitHub 优先展示在最前
-- 每来源最多 **4 条**
+- 每来源最多 **5 条**
 - 英文标题自动翻译为中文
-- 标题格式：`[标题](URL)`，飞书内**可直接点击**
+- **标题本身是可点击超链接**，URL 不在明文中展示
 - GitHub 项目附带星标数
 
 ## 数据库字段
