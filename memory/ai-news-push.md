@@ -60,6 +60,15 @@
 
 ---
 
+## 2026-03-20 下午版（16:08）
+- techcrunch: Jeff Bezos 1000亿美元AI制造业, Cloudflare 2027年Bot流量超人类, Meta AI内容审核系统, DoorDash Tasks付钱训练AI, Nothing CEO App消失
+- theverge: OpenAI桌面超级App, Meta流氓AI安全事件, Adobe Firefly自定义模型, Fitbit AI读医疗记录, Signal创始人合作Meta加密AI, 微软MAI-Image-2, 三星730亿美元AI芯片
+- huxiu: AI换脸短剧泛滥明星肖像权侵权
+
+**推送结果**: ✅ 成功，推送至刘峰（open_id: ou_620abe530f4e51e0f6c22fe8f3472055），messageId: om_x100b54e45f29b0e8c33ef3095101e96
+
+---
+
 ## 推送说明
 - 数据存储于: /Users/liufeng/work/dev/chuyunxiyi-ai/ai_news.db
 - 抓取脚本: ~/.openclaw/workspace/skills/ai-news/scripts/ai_news_fetcher.py
