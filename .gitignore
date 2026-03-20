@@ -2,3 +2,4 @@
 .clawhub/
 .openclaw/
 output.txt
+__pycache__/
