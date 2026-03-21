@@ -522,9 +522,12 @@ def format_for_feishu_markdown(sections: dict) -> str:
             seen_titles.add(title)
             url = item["url"].strip()
 
-            # 英文标题翻译
+            # GitHub 项目名称不翻译，保持英文原文
+            # 其他英文标题超过10字符才翻译
             is_english = all(ord(c) < 128 for c in title)
-            if is_english and len(title) > 10:
+            if src == "github":
+                display_title = title
+            elif is_english and len(title) > 10:
                 title_cn = translate(title)
                 display_title = title_cn if title_cn and title_cn != title else title
             else:
