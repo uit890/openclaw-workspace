@@ -535,7 +535,7 @@ def format_for_feishu_markdown(sections: dict) -> str:
 
             # 转义 title 中的 ] 避免破坏飞书链接格式
             safe_title = display_title.replace("]", "』")
-            star = f" ⭐{int(item['star_count']):,}" if item.get("star_count") else ""
+            star = f" ⭐{int(item['star_count']):,}" if item["star_count"] else ""
 
             # 第一条时输出来源小标题
             if count == 0:
@@ -591,7 +591,7 @@ def format_for_feishu_card(sections: dict) -> dict:
 
             # 转义 title 中的 | 避免破坏飞书 markdown 表格/列表
             safe_title = title.replace("]", "』").replace("[", "【")
-            star = f" ⭐{int(item['star_count']):,}" if item.get("star_count") else ""
+            star = f" ⭐{int(item['star_count']):,}" if item["star_count"] else ""
 
             # 每来源第一条输出小标题
             if count == 0:
